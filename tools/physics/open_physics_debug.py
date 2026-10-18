@@ -348,6 +348,23 @@ def rig_for(character):
     return bake.Rig(bake.char_config(character))
 
 
+@lru_cache(maxsize=1)
+def base_available_characters():
+    """哪些角色有可用的 base（未解算）动画缓存，供 /grid 的 base 来源选用。
+
+    这是一次性 release-revision 快照，不是全员覆盖；大多数角色没有。
+    """
+    out = []
+    for ck in sorted(chars.BY_CK):
+        try:
+            directory = paths.base_anims_dir(ck)
+        except ValueError:
+            continue
+        if directory.is_dir() and next(directory.glob('moe_body_idle.anim'), None):
+            out.append(ck)
+    return out
+
+
 @lru_cache(maxsize=8)
 def response_rig_for(character,mesh_paths,source=response_preview.SOURCE):
     import explicit_bake_inputs
@@ -515,7 +532,18 @@ def animation_data(character, action, source, run=None):
     for part in ('head', 'body'):
         path = action_path(character, action, part, source, run)
         metadata, bones, samples = anim.load_anim(path)
-        if [bone['name'] for bone in bones] != [bone['name'] for bone in model['parts'][part]['bones']]:
+        anim_names = [bone['name'] for bone in bones]
+        mesh_names = [bone['name'] for bone in model['parts'][part]['bones']]
+        if source == 'base':
+            # base 快照可能烘焙于载体化之前：mesh 这边多出载体/锚点骨
+            # （ground_joint、body_root、bn_l_prop 等），而且载体化重新编了
+            # 骨骼下标，连共有骨的先后顺序也变了（父子关系本身没变）。
+            # 前端渲染按骨名查找（不是按下标），缺的骨保留 mesh 自身的
+            # rest pose，所以这里只要求动画骨名都在模型骨集合里，不比顺序。
+            missing = sorted(set(anim_names) - set(mesh_names))
+            if missing:
+                raise ValueError(f'{source} 的 {part} 动画有模型里不存在的骨：{", ".join(missing[:5])}')
+        elif anim_names != mesh_names:
             raise ValueError(f'{source} 的 {part} 动画骨序与所选模型不一致')
         frames, translations, quaternions = anim.unpack_samples(metadata, bones, samples)
         channels = []
@@ -684,7 +712,10 @@ def action_catalog(character, source=None, requested=None):
         raise ValueError(f'动作来源无效：{source}')
     prefix = chars.BY_CK[character]['prefix'] + 'body_'
     preview = full_gpu_preview(character)
-    body_paths = sorted(paths.anims_dir(character).glob(f'{prefix}*.anim'))
+    # base 来源扫自己的未解算输入目录；当前装机目录已改成载体合并动画
+    # （anims_merged/，单文件含 head+body），不再有独立的 moe_body_*.anim。
+    scan_dir = paths.base_anims_dir(character) if source == 'base' else paths.anims_dir(character)
+    body_paths = sorted(scan_dir.glob(f'{prefix}*.anim')) if scan_dir.is_dir() else []
 
     # The complete loop table lives in the game's .asset files.  Parsing those
     # files is correct for baking, but it is far too expensive for a GET that
@@ -710,13 +741,17 @@ def action_catalog(character, source=None, requested=None):
     else:
         action_ids = [path.stem[len(prefix):] for path in body_paths
                       if bake._strip_char_prefix(path.stem) in bake._LOOP]
+    # 没显式指定来源（None）时为旧行为保留：要求 current 和 base 都齐全，
+    # 这样左右对比面板随便换来源都不会缺。显式指定某个来源时只检查它自己，
+    # 否则 current 目录结构变了（见上）会连带把 base 的可用动作也判掉。
+    check_sources = (source,) if source in ('current', 'base') else ('current', 'base')
     result = []
     for action in action_ids:
         available = True
         try:
-            for source in ('current', 'base'):
+            for check_source in check_sources:
                 for part in ('body', 'head'):
-                    action_path(character, action, part, source)
+                    action_path(character, action, part, check_source)
         except ValueError:
             available = False
         result.append(dict(id=action, label=action_label_cn(action), available=available, gpu_status=preview.get(action, {}).get('status')))
@@ -784,6 +819,10 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     sources.extend(dict(id=source, label=label, characters=['jia'])
                                    for source, (_path, label) in PHYSX_PREVIEWS.items())
+                    base_characters = base_available_characters()
+                    if base_characters:
+                        sources.append(dict(id='base', label='未解算基础动画（装机前输入）',
+                                            characters=base_characters))
                 self.send(dict(characters=[dict(id=key, name=chars.BY_CK[key]['name_cn']) for key in listed], focus=focus,
                                read_only=READ_ONLY, only_source=ONLY_SOURCE, sources=sources))
             elif route == '/api/model':

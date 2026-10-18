@@ -4,6 +4,35 @@
 
 给谁用：要接手或参与这条流水线的合作者，以及帮他干活的 AI 助手。
 
+## 先看这个：动作预览器（网页版）
+
+调物理和查动画问题，最常用的就是它：`tools/physics/open_physics_debug.py`。它在本机起一个只读的小网页服务，用浏览器里的 three.js 直接播放烘焙后的头身动画，头飞了、裙子穿腿、发尾抖动、循环接缝跳变，肉眼一看就知道。排查物理和动画问题时先开它，再去翻数据。
+
+**十动作页 `/grid`**：一个角色的 10 个固定动作（idle、writing、sitting、dance_loop、dance_spin、emotion_laugh、emotion_shock、emotion_fear、emotion_angry_start、jockey_lance_couched_gallop）并排同步播放，十格共用一个视角。顶栏可切角色和来源，可暂停、调速（0.25×/0.5×/1×）、同步从头、回到正面；拖动旋转，滚轮缩放，右键平移。适合批量烘完后一眼扫过 44 个角色。
+
+![十动作页](docs_assets/physics_debug_grid.png)
+
+**单动作调试台 `/`**：一个角色、一个动作，左右分屏对比（当前正式物理对基础动作或试烘历史）。可以逐帧拖动，开关碰撞体和网格显示，按部件显隐，点选裙子、袖子、飘带后调物理方式、参数和碰撞组，并试烘当前动作（只读模式下禁用）。
+
+![单动作调试台](docs_assets/physics_debug_single.png)
+
+启动有两种，对应上面两个页面：
+
+```
+# 十动作页：鸣潮 44 个新角色。两个环境变量缺一个都会报“角色不在可调试名单”或“找不到 mesh”
+MOE_PHYSICS_RESPONSE_TRIAL_VIEW=1 MOE_OUT_ROOT=<含模型的构建根> python tools/physics/open_physics_debug.py --read-only --only-source wuwa_10main --port 8765
+# 然后打开 http://127.0.0.1:8765/grid
+
+# 单动作调试台：不要加 --only-source，直接 http://127.0.0.1:8767/?character=flo&action=dance_spin
+MOE_PHYSICS_RESPONSE_TRIAL_VIEW=1 MOE_OUT_ROOT=<含模型的构建根> python tools/physics/open_physics_debug.py --read-only --port 8767
+```
+
+服务只绑 127.0.0.1，没有账号体系，不要暴露到网络。首次需要 npm 装 three，脚本报错里有命令。
+
+已知限制：
+- 单动作调试台的前端（`debug_ui/app.js`）没有登记 `wuwa_10main` 来源，加了 `--only-source wuwa_10main` 再开单动作页会报“动作 … 没有通过头身配对校验”（`/api/actions` 同一参数返回正常，是前端挑目录来源时回落到了 `current`）。鸣潮 44 个角色用 `/grid`，单动作页用正式角色（图里是芙洛伦）。
+- 预览器读哪一批结果，写死在 `tools/physics/wuwa_preview.py` 的 `ROOTS`，换批次时要改。
+
 ## 先读哪个
 
 1. 本文件（5 分钟）：知道包里有什么、哪些东西跑不起来。

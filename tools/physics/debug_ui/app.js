@@ -247,12 +247,29 @@ function updatePose() {
     actor.root.visible = actorIndex === (reviewMode ? 1 : 0) || element('compare').checked;
     actor.root.position.x = element('compare').checked ? (actorIndex === 0 ? 65 : -65) : 0;
     if (!actor.animation) continue;
-    for (const [partName, data] of Object.entries(actor.animation)) {
+    // body 先于 head：head 骨架现在也含完整的 ground_joint/body_root/bn_m_root
+    // 链（载体化之后两套 mesh 共享同一份骨架），但旧的 base 快照只在 body 的
+    // .anim 里给这几根根骨写了通道，head 的 .anim 里它们只有 rest 值。按名字
+    // 共享：head 侧没有通道的骨，如果 body 侧有，直接搬 body 当帧的值过去，
+    // 这样头部跟着身体根骨走，不需要再按世界矩阵换算对齐（见下方共享逻辑）。
+    const order = ['body', 'head'];
+    const boneChannelByPart = {};
+    for (const partName of order) {
+      const data = actor.animation[partName];
+      if (!data) continue;
       const sample = Math.min(data.frames - 1, state.frame / Math.max(1, state.frameCount - 1) * (data.frames - 1));
       const frame = Math.floor(sample);
       const nextFrame = Math.min(data.frames - 1, frame + 1);
       const fraction = sample - frame;
+      const seenNames = new Set();
+      boneChannelByPart[partName] = seenNames;
       for (const channel of data.channels) {
+        // channels 对每根骨都有一条，哪怕完全没被这个 part 的 .anim 驱动
+        // （后端对没采样的骨用 1 帧 rest 值填充）。只有真正多帧的通道
+        // （translation/quaternion 数组长度 > 一帧）才算「这个 part 驱动了
+        // 这根骨」，用来给下面的共享逻辑判断该不该借另一个 part 的数据。
+        const animated = channel.translation.length > 3 || channel.quaternion.length > 4;
+        if (animated) seenNames.add(channel.name);
         const bone = actor.parts[partName].byName.get(channel.name);
         if (!bone) continue;
         bone.position.fromArray(channel.translation, channel.translation.length > 3 ? frame * 3 : 0);
@@ -268,12 +285,29 @@ function updatePose() {
           }
         }
       }
+      // 把本 part 没有自己通道、但另一个 part（已跑过的，即 body）有通道的
+      // 同名骨直接设成另一个 part 骨架里算好的局部变换 —— 父子关系相同，
+      // 局部变换可以直接搬，不用换算世界矩阵。
+      const headPart = actor.parts[partName];
+      for (const otherName of order) {
+        if (otherName === partName || !boneChannelByPart[otherName]) continue;
+        const otherPart = actor.parts[otherName];
+        for (const name of boneChannelByPart[otherName]) {
+          if (seenNames.has(name)) continue;
+          const mine = headPart.byName.get(name), theirs = otherPart.byName.get(name);
+          if (!mine || !theirs) continue;
+          mine.position.copy(theirs.position);
+          mine.quaternion.copy(theirs.quaternion);
+          seenNames.add(name);
+        }
+      }
     }
     actor.root.updateMatrixWorld(true);
-    // 通道已写完、碰撞盒还没读 matrixWorld —— 对齐必须夹在这中间，
-    // 早了会被 .anim 覆盖，晚了碰撞盒会用没对齐的头部骨。
-    attachHeadToBody(actor);
-    actor.root.updateMatrixWorld(true);
+    // 旧的 attachHeadToBody()（按世界矩阵换算、把结果塞进 head.anchor 的
+    // 局部变换）假设 head.anchor 是 head 骨架的根、父就是 actor.root。
+    // 载体化之后 head/body 两套 mesh 共享同一份完整骨架，bn_m_root 的父是
+    // body_root 不是 root，这个假设不成立——实测会把头部送到错误位置。
+    // 现在共享骨直接按局部变换搬（上面的循环），不再需要这步换算。
     for (const mesh of actor.colliders) {
       const info = mesh.userData.rigid;
       const bone = actor.parts[info.part].byName.get(info.bone);
@@ -695,7 +729,7 @@ async function loadPreview({ reloadCatalog = false, trial = null, explicitAction
   try {
     if (reloadCatalog) {
       const chosen = explicitAction || element('action').value;
-      const catalogSource = [right, left].find(source => previewSources.has(source)) || 'current';
+      const catalogSource = [right, left].find(source => previewSources.has(source) || source === 'base') || 'current';
       const actionQuery = { character, source: catalogSource };
       // Keep a deep-link action visible even when it is outside the 50-action
       // focus list used for the fast first load.

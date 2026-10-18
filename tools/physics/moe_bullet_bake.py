@@ -348,6 +348,7 @@ def topo_order(names, parents):
 
 
 _LOOP = None
+_LOOP_BASE = {}
 
 
 def is_looping(anim_id):
@@ -386,7 +387,14 @@ def is_looping(anim_id):
                 for a in re.findall(r'animation\s*=\s*"([^"]+)"', blk):
                     k = _strip_char_prefix(a)
                     _LOOP[k] = _LOOP.get(k, False) or loop
-    return _LOOP.get(_strip_char_prefix(anim_id), True)
+                    # 载体架构的 asset 里 animation 是 `body_X__<head 名>[__rig]` 合并 id，而查询键是
+                    # 裸 `body_X`：不归一就永远查不到 → 全部当循环（10 个固定动作靠常量表躲过，
+                    # 全动作烘焙里 123 个非循环动作会被多圈+闭合接缝）。归一表单独放，
+                    # 不动 _LOOP（1710 行与预览器按原键求交集）。
+                    b = k.split("__", 1)[0]
+                    _LOOP_BASE[b] = _LOOP_BASE.get(b, False) or loop
+    k = _strip_char_prefix(anim_id)
+    return _LOOP.get(k, _LOOP_BASE.get(k.split("__", 1)[0], True))
 
 
 def _strip_char_prefix(anim_id):
