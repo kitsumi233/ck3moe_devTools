@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "character": "jia",
+  "source_profile": {
+    "version": 1,
+    "character": "jia",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairI1",
+        "HairI2",
+        "HairI3",
+        "HairI4",
+        "HairI5",
+        "HairI6",
+        "HairI7",
+        "HairI8",
+        "HairI9",
+        "HairI10",
+        "HairI11",
+        "HairI12",
+        "HairI13",
+        "HairI14",
+        "HairI15",
+        "HairI16",
+        "HairI17",
+        "HairJ1",
+        "HairJ2",
+        "HairJ3",
+        "HairJ4",
+        "HairJ5",
+        "HairJ6",
+        "HairJ7",
+        "HairJ8",
+        "HairJ9",
+        "HairJ10",
+        "HairJ11",
+        "HairJ12",
+        "HairJ13",
+        "HairJ14",
+        "HairJ15",
+        "HairJ16",
+        "HairJ17"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.5,
+        0.5,
+        1.5
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 8,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {
+    "idle": {
+      "physx_contact_frequency_hz": 5.0,
+      "physx_contact_damping_ratio": 2.0
+    },
+    "AI_forgiving": {
+      "wind": 0.0
+    },
+    "eccentric_start": {
+      "wind": 2.0
+    },
+    "emotion_disgust_start": {
+      "wind": 2.0
+    },
+    "emotion_disgust": {
+      "wind": 2.0
+    },
+    "emotion_happy_start": {
+      "wind": 0.0
+    },
+    "emotion_shame": {
+      "wind": 0.0
+    },
+    "frontEnd_child": {
+      "wind": 0.0
+    },
+    "frontEnd_infant": {
+      "wind": 2.0
+    },
+    "hero_flex": {
+      "wind": 0.0
+    },
+    "hunting_bow_down_look": {
+      "wind": 2.0
+    },
+    "prostration_loop": {
+      "wind": 2.0
+    },
+    "prostration_start": {
+      "wind": 0.0
+    },
+    "standing_horse": {
+      "wind": 2.0
+    },
+    "sitting": {
+      "wind": 2.0
+    },
+    "throneRoom_bow2": {
+      "wind": 2.0
+    },
+    "waroverview_defender": {
+      "wind": 0.0
+    },
+    "wedding_happy_cry_loop1": {
+      "wind": 2.0
+    },
+    "wedding_groom_right_idle": {
+      "wind": 0.0
+    }
+  },
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\jia\\acceptance.json",
+    "source_acceptance_sha256": "82c5fadbbe30c7fff0fe7be43898502f2696dcfa92367b7ec093ccc7af433970",
+    "source_profile_variant": "hard1p5",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits",
+    "historical_action_wind": {
+      "path": "work\\evidence\\physx_prototype_20260917\\jia_breeze_preview_20260918\\selection.json",
+      "sha256": "673216ff17fe43dc053740f49e273fdc551aae5fac436a61845c19c40b1118d2",
+      "all338_action_counts": {
+        "8": 320,
+        "0": 8,
+        "2": 10
+      },
+      "paired331_counts": {
+        "8": 313,
+        "0": 8,
+        "2": 10
+      },
+      "legacy_body_only_default_wind": 8,
+      "new_loop_tail": 24,
+      "scope": "Retain selected per-action force amplitudes while normally solving new hair sources; no old animation channel copying."
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "character": "das",
+  "source_profile": {
+    "version": 1,
+    "character": "das",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairA1",
+        "HairA2",
+        "HairA3",
+        "HairA4",
+        "HairA5",
+        "HairA6",
+        "HairA7",
+        "HairA8",
+        "HairA9",
+        "HairA10",
+        "HairA11",
+        "HairA12",
+        "HairA13",
+        "HairB1",
+        "HairB2",
+        "HairB3",
+        "HairB4",
+        "HairB5",
+        "HairB6",
+        "HairB7",
+        "HairB8",
+        "HairB9",
+        "HairB10",
+        "HairB11",
+        "HairB12",
+        "HairB13",
+        "HairC1",
+        "HairC2",
+        "HairC3",
+        "HairC4",
+        "HairC5",
+        "HairC6",
+        "HairC7",
+        "HairC8",
+        "HairC9",
+        "HairC10",
+        "HairC11",
+        "HairC12",
+        "HairC13"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.5,
+        0.5,
+        1.5
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {
+    "dead": {
+      "wind": 0.0
+    }
+  },
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\das\\acceptance.json",
+    "source_acceptance_sha256": "27bbf561e57871b2a4d04014b9858618b917694cc3f1f439e5f59638903bc3c5",
+    "source_profile_variant": "hard1p5",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits",
+    "historical_action_wind": {
+      "path": "work\\evidence\\physx_all_20260918\\install_manifests\\das.json",
+      "sha256": "0a9e8a3df71cc3f6a49e8bf46d0cf84ce207920ba8b35f1744a15c733a9a2ad3",
+      "action": "dead",
+      "selection": {
+        "source": "D:\\有趣计划\\CK3_MoeMod\\work\\evidence\\physx_all_20260918\\trial_wind0\\das",
+        "reason": "complete wind0 trial pair; full wind2 jitter regressed: [{\"group\": \"other\", \"before\": 0.11307222404773927, \"after\": 11.78547480034619}]",
+        "status": "complete"
+      },
+      "wind": 0
+    }
+  }
+}

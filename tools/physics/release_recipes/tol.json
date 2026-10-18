@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "character": "tol",
+  "source_profile": {
+    "version": 1,
+    "character": "tol",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairA4",
+        "HairA5",
+        "HairA6",
+        "HairA7",
+        "HairA8",
+        "HairA9",
+        "HairA10",
+        "HairA11",
+        "HairA12",
+        "HairA13",
+        "HairB4",
+        "HairB5",
+        "HairB6",
+        "HairB7",
+        "HairB8",
+        "HairB9",
+        "HairB10",
+        "HairB11",
+        "HairB12",
+        "HairB13",
+        "HairC4",
+        "HairC5",
+        "HairC6",
+        "HairC7",
+        "HairC8",
+        "HairC9",
+        "HairC10",
+        "HairC11",
+        "HairC12",
+        "HairC13",
+        "HairD4",
+        "HairD5",
+        "HairD6",
+        "HairD7",
+        "HairD8",
+        "HairD9",
+        "HairD10",
+        "HairD11",
+        "HairD12",
+        "HairD13"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.0,
+        0.3333333333333333,
+        1.0
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\tol\\acceptance.json",
+    "source_acceptance_sha256": "a49074080bbd2c3e5af62977bd35e32a8e3787780316c7fb6c9a33bd7561de9f",
+    "source_profile_variant": "hard1p0_distal4",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

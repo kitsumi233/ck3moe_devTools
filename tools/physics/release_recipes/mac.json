@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "character": "mac",
+  "source_profile": {
+    "version": 1,
+    "character": "mac",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairA1",
+        "HairA2",
+        "HairA3",
+        "HairA4",
+        "HairA5",
+        "HairA6",
+        "HairA7",
+        "HairA8",
+        "HairA9",
+        "HairA10",
+        "HairA11",
+        "HairA12",
+        "HairA13",
+        "HairA14",
+        "HairA15",
+        "HairA16",
+        "HairA17",
+        "HairA18",
+        "HairA19"
+      ],
+      "locked_rotation_half_width_deg": [
+        3.0,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\mac\\acceptance.json",
+    "source_acceptance_sha256": "7b323863eb427312d780290858035e555e8642065f1d7dc7829b57e2c2534fdb",
+    "source_profile_variant": "hard3",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

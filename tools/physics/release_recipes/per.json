@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "character": "per",
+  "source_profile": {
+    "version": 1,
+    "character": "per",
+    "rigids": {
+      "hair_base_L_a__jnt2": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt3": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt4": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt5": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt6": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt7": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt8": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt9": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt10": {
+        "angular_damping": 0.98
+      },
+      "hair_base_L_a__jnt11": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt2": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt3": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt4": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt5": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt6": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt7": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt8": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt9": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt10": {
+        "angular_damping": 0.98
+      },
+      "hair_base_R_a__jnt11": {
+        "angular_damping": 0.98
+      }
+    },
+    "solver": {}
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {
+    "idle": {
+      "wind": 0.0
+    }
+  },
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\per\\acceptance.json",
+    "source_acceptance_sha256": "386399c99f520aae3e01f5ca6c3a01afb0057f5b90fc45bd8b263530bab40f3e",
+    "source_profile_variant": "damping98",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits",
+    "historical_action_wind": {
+      "path": "work\\evidence\\physx_all_20260918\\install_manifests\\per.json",
+      "sha256": "fbcbf7f1b634bef134493688817b75dd68748c10ad1cb7aa282d807e4a1133ab",
+      "action": "idle",
+      "selection": {
+        "source": "D:\\有趣计划\\CK3_MoeMod\\work\\evidence\\physx_all_20260918\\trial_wind0\\per",
+        "reason": "complete wind0 trial pair; full wind2 jitter regressed: [{\"group\": \"other\", \"before\": 29.89179896091638, \"after\": 51.336843157155364}]",
+        "status": "complete"
+      },
+      "wind": 0
+    }
+  }
+}

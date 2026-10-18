@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "character": "gro",
+  "source_profile": {
+    "version": 1,
+    "character": "gro",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairA1",
+        "HairA2",
+        "HairA3",
+        "HairA4",
+        "HairA5",
+        "HairA6",
+        "HairA7",
+        "HairA8",
+        "HairA9",
+        "HairA10",
+        "HairA11",
+        "HairA12",
+        "HairA13"
+      ],
+      "locked_rotation_half_width_deg": [
+        0.5,
+        0.16666666666666666,
+        0.5
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\gro\\acceptance.json",
+    "source_acceptance_sha256": "b4563f65650af88f2a161edb48a00efcf7b121ea6fa0fc78a712bc4accf01d4e",
+    "source_profile_variant": "hard0p5",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

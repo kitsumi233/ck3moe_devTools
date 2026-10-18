@@ -1,0 +1,224 @@
+{
+  "_doc": "物理响应主配置（2026-09-29 定案）。make_trial_root.py --release-config 由此生成 experiment.json；families_by_game 按 moe_chars 的 game 前缀展开到每个角色，优先级高于 families_by_character。mesh_overrides_by_character 是候选暂存路径，不进主配置。 mesh_overrides_by_character / head_sources_by_character：9 个发布角色的表情修正头（09-29），发布 canonical 不可变，所以放在 work/fx_heads_20260929，路径相对仓库根。",
+  "solver": {
+    "physx_bone_twist_projection": false,
+    "writeback_detwist": true,
+    "physx_contact_frequency_hz": 60.0,
+    "physx_contact_damping_ratio": 1.0,
+    "physx_depth_depenetration": [
+      0.03,
+      0.15,
+      1.0
+    ],
+    "writeback_lowpass_hz": 1.5,
+    "no_collide_groups": ""
+  },
+  "families": {
+    "skirt": [
+      1.0,
+      0.55,
+      4.5,
+      0.03,
+      0.055
+    ],
+    "ribbon": [
+      1.15,
+      0.62,
+      3.75,
+      0.07,
+      0.12
+    ],
+    "ear": [
+      8.0,
+      5.5,
+      1.15,
+      0.2,
+      0.3
+    ],
+    "tail": [
+      1.0,
+      0.55,
+      4.5,
+      0.05,
+      0.08
+    ],
+    "hair": [
+      20.0,
+      13.0,
+      1,
+      0.08,
+      0.05
+    ],
+    "accessory": [
+      8.0,
+      5.5,
+      4.05,
+      0.05,
+      0.09
+    ],
+    "soft_body": [
+      2.2,
+      1.55,
+      1.3,
+      0.14,
+      0.24
+    ],
+    "cloth": [
+      1.2,
+      0.7,
+      4.2,
+      0.05,
+      0.09
+    ],
+    "sleeve": [
+      1.45,
+      0.9,
+      1.25,
+      0.18,
+      0.28
+    ]
+  },
+  "twist_z_limit_deg": null,
+  "bone_twist_lock": true,
+  "tuning_basis": "bone-lock A/B: accessory, skirt, cloth, ribbon HF regressions; hair/ear/sleeve/soft_body/tail held at prior values; compliant contacts 60 Hz critically damped (sitting/shock skirt jitter sweep); user: motion above 0.5 Hz reads as jitter -> overdamped drives (ratio x3 capped 4.5, half-life /2); tep lantern (acc_R_Gadget_a) no longer collides with skirt/tail (user-named lantern-skirt jitter); user: depenetration graded by penetration depth -- <=0.1 deep push-out capped at 1, >=0.4 at 10 (max), linear between; zero-phase low-pass 1.5Hz on physics-bone local channels after solve (user: >0.5Hz reads as jitter); depth thresholds lowered to 0.03/0.15 (lin idle tail stuck-then-snap at 0.1/0.4: 4/8 replicas jumped, 0/8 after; cyu sitting still 0 tunnelled); hair family reverted to pre-overdamping values (user: lin hair lags in dance_spin and tangles in sitting; >2Hz hair jitter left to the write-back low-pass); hair spring 2.5/1.6 -> 20/13 Hz root/tip (user: hairstyles deform, too soft; 4-role test sha/kse/lit/chr idle sag p95 59-91 -> 16-22 deg, >2Hz jitter <=0.02 deg); ribbon added to solver twist-lock families (sab/jia/sha strap-belt 168-177 deg one-frame twist flips); ear and accessory springs 8/5.5 Hz (tan ear 33 -> 1.2 deg >2Hz on 8-role test); endfield-only softening (families_by_game.endfield): hair 4/2.5 Hz, tail ratio 1.2, ear 3/2 Hz (user: endfield hair/tail/ear too stiff; SOFT1 on 8 roles, sway +30~180%, >2Hz jitter max hair 1.2->1.4)",
+  "bone_twist_families": [
+    "accessory",
+    "cloth",
+    "ear",
+    "hair",
+    "ribbon",
+    "sleeve",
+    "soft_body",
+    "tail"
+  ],
+  "hair_torso_walls": true,
+  "exclude_pairs": {
+    "tep": [
+      {
+        "rigids": [
+          "acc_R_Gadget_a"
+        ],
+        "families": [
+          "skirt",
+          "tail"
+        ]
+      }
+    ]
+  },
+  "keep_zero_lock_families": [
+    "soft_body",
+    "ear",
+    "accessory"
+  ],
+  "admit_pairs": {
+    "tan": [
+      {
+        "rigids": [
+          "左肩",
+          "左腕",
+          "左ひじ",
+          "右肩",
+          "右腕",
+          "右ひじ"
+        ],
+        "families": [
+          "cloth"
+        ],
+        "bodies": [
+          "clothes_base"
+        ]
+      }
+    ]
+  },
+  "keep_zero_lock_names_by_character": {
+    "tan": [
+      "hair_base_Up"
+    ]
+  },
+  "families_by_character": {
+    "spb": {
+      "hair": [
+        8.0,
+        5.5,
+        1,
+        0.08,
+        0.05
+      ]
+    },
+    "and": {
+      "hair": [
+        8.0,
+        5.5,
+        1,
+        0.08,
+        0.05
+      ]
+    }
+  },
+  "families_by_game": {
+    "endfield": {
+      "hair": [
+        4.0,
+        2.5,
+        1,
+        0.08,
+        0.05
+      ],
+      "tail": [
+        1.0,
+        0.55,
+        1.2,
+        0.05,
+        0.08
+      ],
+      "ear": [
+        3.0,
+        2.0,
+        1.15,
+        0.2,
+        0.3
+      ],
+      "_why": "用户 09-29：终末地头发/尾巴/耳朵太硬；SOFT1 试验 8 人通过，只对终末地用"
+    }
+  },
+  "mesh_overrides_by_character": {
+    "col": {
+      "head": "work/fx_heads_20260929/col/moe_head.mesh"
+    },
+    "kse": {
+      "head": "work/fx_heads_20260929/kse/moe_head.mesh"
+    },
+    "cen": {
+      "head": "work/fx_heads_20260929/cen/moe_head.mesh"
+    },
+    "mac": {
+      "head": "work/fx_heads_20260929/mac/moe_head.mesh"
+    },
+    "mab": {
+      "head": "work/fx_heads_20260929/mab/moe_head.mesh"
+    },
+    "mos": {
+      "head": "work/fx_heads_20260929/mos/moe_head.mesh"
+    },
+    "gro": {
+      "head": "work/fx_heads_20260929/gro/moe_head.mesh"
+    },
+    "grs": {
+      "head": "work/fx_heads_20260929/grs/moe_head.mesh"
+    },
+    "grz": {
+      "head": "work/fx_heads_20260929/grz/moe_head.mesh"
+    }
+  },
+  "head_sources_by_character": {
+    "col": "work/fx_heads_20260929/col/anims",
+    "kse": "work/fx_heads_20260929/kse/anims",
+    "cen": "work/fx_heads_20260929/cen/anims",
+    "mac": "work/fx_heads_20260929/mac/anims",
+    "mab": "work/fx_heads_20260929/mab/anims",
+    "mos": "work/fx_heads_20260929/mos/anims",
+    "gro": "work/fx_heads_20260929/gro/anims",
+    "grs": "work/fx_heads_20260929/grs/anims",
+    "grz": "work/fx_heads_20260929/grz/anims"
+  }
+}

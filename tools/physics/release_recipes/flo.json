@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "character": "flo",
+  "source_profile": {
+    "version": 1,
+    "character": "flo",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "bone0265_Hair_LF01",
+        "bone0265_Hair_LF02",
+        "bone0265_Hair_LF03",
+        "bone0265_Hair_LF04",
+        "bone0265_Hair_LF05",
+        "bone0265_Hair_LF06",
+        "bone0265_Hair_LF07",
+        "bone0265_Hair_LF08",
+        "bone0265_Hair_LF09",
+        "bone0265_Hair_LF010",
+        "bone0265_Hair_LF011",
+        "bone0265_Hair_LF012",
+        "bone0265_Hair_LF013",
+        "bone0270_Hair_RF01",
+        "bone0270_Hair_RF02",
+        "bone0270_Hair_RF03",
+        "bone0270_Hair_RF04",
+        "bone0270_Hair_RF05",
+        "bone0270_Hair_RF06",
+        "bone0270_Hair_RF07",
+        "bone0270_Hair_RF08",
+        "bone0270_Hair_RF09",
+        "bone0270_Hair_RF010",
+        "bone0270_Hair_RF011",
+        "bone0270_Hair_RF012",
+        "bone0270_Hair_RF013"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.5,
+        0.5,
+        1.5
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\flo\\acceptance.json",
+    "source_acceptance_sha256": "62a8b4f6076c7733ee2f44605a5ed232648f4c7c794e7450b3a52e6f8e573a6e",
+    "source_profile_variant": "hard1p5",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "character": "lec",
+  "source_profile": {
+    "version": 1,
+    "character": "lec",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairE1",
+        "HairE2",
+        "HairE3",
+        "HairE4",
+        "HairE5",
+        "HairE6",
+        "HairE7",
+        "HairE8",
+        "HairE9",
+        "HairE10",
+        "HairE11",
+        "HairE12",
+        "HairE13",
+        "HairE14",
+        "HairE15",
+        "HairE16",
+        "HairE17",
+        "HairE18",
+        "HairE19",
+        "HairE20",
+        "HairE21",
+        "HairF1",
+        "HairF2",
+        "HairF3",
+        "HairF4",
+        "HairF5",
+        "HairF6",
+        "HairF7",
+        "HairF8",
+        "HairF9",
+        "HairF10",
+        "HairF11",
+        "HairF12",
+        "HairF13",
+        "HairF14",
+        "HairF15",
+        "HairF16",
+        "HairF17",
+        "HairF18",
+        "HairF19",
+        "HairF20",
+        "HairF21"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.0,
+        0.3333333333333333,
+        1.0
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\lec\\acceptance.json",
+    "source_acceptance_sha256": "c4761322fe30ff33c2125ef37c6009366dba574aef4602a61b7ebbfb13663064",
+    "source_profile_variant": "hard1p0",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

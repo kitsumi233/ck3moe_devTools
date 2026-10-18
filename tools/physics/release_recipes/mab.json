@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "character": "mab",
+  "source_profile": {
+    "version": 1,
+    "character": "mab",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "BackHairA1",
+        "BackHairA2",
+        "BackHairA3",
+        "BackHairA4",
+        "BackHairA5",
+        "BackHairA6",
+        "BackHairA7",
+        "BackHairA8",
+        "BackHairA9",
+        "BackHairA10",
+        "BackHairA11",
+        "BackHairA12",
+        "BackHairA13",
+        "BackHairB1",
+        "BackHairB2",
+        "BackHairB3",
+        "BackHairB4",
+        "BackHairB5",
+        "BackHairB6",
+        "BackHairB7",
+        "BackHairB8",
+        "BackHairB9",
+        "BackHairB10",
+        "BackHairB11",
+        "BackHairB12",
+        "BackHairB13",
+        "BackHairC1",
+        "BackHairC2",
+        "BackHairC3",
+        "BackHairC4",
+        "BackHairC5",
+        "BackHairC6",
+        "BackHairC7",
+        "BackHairC8",
+        "BackHairC9",
+        "BackHairC10",
+        "BackHairC11",
+        "BackHairC12",
+        "BackHairC13"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.5,
+        0.5,
+        1.5
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\mab\\acceptance.json",
+    "source_acceptance_sha256": "805a5b6a419079607f9e2c09e3ad7f61597e016b4049602faee88d60d315f631",
+    "source_profile_variant": "hard1p5",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Moe · 十动作并排</title>
+  <style>
+    :root { --bg: #18212a; --panel: #1f2a35; --line: #33475a; --text: #dde7ee; --muted: #8fa3b3; --accent: #ffcd76; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 system-ui, "Microsoft YaHei", sans-serif; }
+    header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--line); }
+    header b { font-size: 15px; }
+    header label { display: flex; gap: 6px; align-items: center; color: var(--muted); }
+    select, button { background: #273644; color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; font: inherit; }
+    select { max-width: 360px; }
+    button { cursor: pointer; }
+    button:hover { border-color: var(--accent); }
+    #status { margin-left: auto; color: var(--muted); }
+    #status.error { color: #ffac9c; }
+    #stage { position: relative; height: calc(100% - 48px); }
+    #stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    #cells { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); pointer-events: none; }
+    .cell { border: 1px solid #2a3a48; position: relative; }
+    .cell span { position: absolute; left: 6px; top: 4px; padding: 1px 6px; border-radius: 3px; background: rgba(15, 22, 29, .75); font-size: 12px; }
+    .cell span em { color: var(--muted); font-style: normal; margin-left: 6px; }
+    .help { position: absolute; right: 8px; bottom: 6px; color: var(--muted); font-size: 12px; pointer-events: none; }
+    a { color: var(--muted); }
+  </style>
+  <script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+</head>
+<body>
+  <header>
+    <b>十动作并排</b>
+    <label>角色<select id="character" aria-label="角色"></select></label>
+    <label>来源<select id="source" aria-label="来源"></select></label>
+    <button id="play" type="button">暂停</button>
+    <label>速度<select id="speed" aria-label="播放速度"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option></select></label>
+    <button id="restart" type="button" title="所有动作回到第 0 帧">同步从头</button>
+    <button id="reset-camera" type="button">回到正面</button>
+    <a id="single" href="/">单动作调试台</a>
+    <span id="status" role="status">正在准备…</span>
+  </header>
+  <div id="stage"><div id="cells"></div><div class="help">拖动旋转 · 滚轮缩放 · 右键平移（十格共用一个视角）</div></div>
+  <script type="module" src="grid.js"></script>
+</body>
+</html>

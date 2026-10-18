@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "character": "kse",
+  "source_profile": {
+    "version": 1,
+    "character": "kse",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairA1",
+        "HairA2",
+        "HairA3",
+        "HairA4",
+        "HairA5",
+        "HairA6",
+        "HairA7",
+        "HairA8",
+        "HairA9",
+        "HairA10",
+        "HairA11"
+      ],
+      "locked_rotation_half_width_deg": [
+        3.0,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\kse\\acceptance.json",
+    "source_acceptance_sha256": "e8c26a1d526dc0986db1632456f6cc21f90c1b35d2a153c03fba7b88e71ad0f2",
+    "source_profile_variant": "hard3",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "character": "dai",
+  "source_profile": {
+    "version": 1,
+    "character": "dai",
+    "rigids": {},
+    "solver": {},
+    "hair": {
+      "rigids": [
+        "HairF1",
+        "HairF2",
+        "HairF3",
+        "HairF4",
+        "HairF5",
+        "HairF6",
+        "HairF7",
+        "HairF8",
+        "HairF9",
+        "HairF10",
+        "HairF11",
+        "HairF12",
+        "HairF13",
+        "HairG1",
+        "HairG2",
+        "HairG3",
+        "HairG4",
+        "HairG5",
+        "HairG6",
+        "HairG7",
+        "HairG8",
+        "HairG9",
+        "HairG10",
+        "HairG11",
+        "HairG12",
+        "HairG13",
+        "HairH1",
+        "HairH2",
+        "HairH3",
+        "HairH4",
+        "HairH5",
+        "HairH6",
+        "HairH7",
+        "HairH8",
+        "HairH9",
+        "HairH10",
+        "HairH11",
+        "HairH12",
+        "HairH13"
+      ],
+      "locked_rotation_half_width_deg": [
+        1.5,
+        0.5,
+        1.5
+      ]
+    }
+  },
+  "native_defaults": {
+    "physx_disable_preprocessing": true,
+    "physx_iters": 16,
+    "physx_velocity_iters": 1
+  },
+  "action_solver_overrides": {},
+  "evidence": {
+    "source_acceptance": "work\\evidence\\overnight_20260919\\hair\\screen20\\dai\\acceptance.json",
+    "source_acceptance_sha256": "c068c40956839032c1cb12d0415796be0f89daee03789ea375774b5c98300aee",
+    "source_profile_variant": "hard1p5",
+    "pipeline": "Original PMX source profile; normal native GPU solve and normal animation writer; no final-channel edits"
+  }
+}

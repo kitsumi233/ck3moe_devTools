@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="moe-token" content="__TOKEN__">
+  <title>Moe · 物理调试台</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+</head>
+<body>
+  <header><div><b>Moe</b><span>物理调试台</span></div><span id="status" role="status">正在准备预览…</span><button id="save">保存参数方案</button></header>
+  <main>
+    <aside class="library">
+      <label>角色<select id="character" aria-label="角色"></select></label>
+      <label>动作<select id="action" aria-label="动作"></select></label>
+      <label>左侧来源<select id="left-source" aria-label="左侧来源"><option value="current">当前正式物理</option><option value="base">基础动作</option><option value="expression_v2">新版表情 · 物理候选</option></select></label>
+      <label>右侧对照<select id="history" aria-label="试烘历史"><option value="">基础动作</option></select></label>
+      <p class="hint debug-only">先点选部件，再调整右侧参数。也可以在模型上单击选择。</p>
+      <p id="model-warnings" class="hint" role="status"></p>
+      <div class="debug-only">
+      <div class="section-title">部件 <span id="part-count"></span></div>
+      <input id="filter" placeholder="筛选：裙子、袖子、Hair…" aria-label="筛选部件">
+      <div class="bulk-toggles">
+        <span>物理</span><button id="collider-all" type="button" title="所有部件参与物理解算">全选</button><button id="collider-none" type="button" title="所有可选部件退出解算（墙除外）">全不选</button>
+      </div>
+      <div id="groups"></div>
+      </div>
+      <div class="section-title">网格 <span id="mesh-count"></span></div>
+      <div class="bulk-toggles">
+        <button id="mesh-all" type="button" title="显示所有网格">全选</button><button id="mesh-none" type="button" title="隐藏所有网格">全不选</button>
+      </div>
+      <div id="mesh-list"></div>
+    </aside>
+    <section class="stage">
+      <div class="view-tools"><label><input id="colliders" type="checkbox">碰撞体</label><label><input id="wireframe" type="checkbox">网格</label><label><input id="compare" type="checkbox" checked>并排对比</label><button id="reset-camera">回到正面</button></div>
+      <div id="viewport"><div class="view-label left" id="left-label">当前正式物理</div><div class="view-label right" id="right-label">基础动作</div><div class="view-help">拖动旋转 · 滚轮缩放 · 右键平移 · 点击部件</div></div>
+      <div class="timeline"><button id="previous" aria-label="上一帧">◀</button><button id="play">播放</button><button id="next" aria-label="下一帧">▶</button><input id="frame" type="range" min="0" max="1" value="0" aria-label="时间轴"><output id="frame-label">0 / 0</output><input id="jump-frame" type="number" min="0" max="0" value="0" aria-label="跳到帧" title="输入帧号后回车"><select id="speed" aria-label="播放速度"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option></select></div>
+      <div class="stage-note">碰撞体按动画骨位显示，右侧预览调整后的尺寸；接触轨迹与游戏光影需另行确认。</div>
+    </section>
+    <aside class="inspector">
+      <div id="review-panel" hidden>
+        <div class="section-title">本次样本检查</div>
+        <h2 id="review-status"></h2>
+        <p id="review-focus" class="review-copy"></p>
+        <p id="review-known" class="review-copy"></p>
+        <div class="section-title">推荐动作</div>
+        <div id="review-actions"></div>
+        <p class="hint">左侧为当前正式版，右侧为待检查候选。取消并排后只显示候选。可拖动旋转、滚轮放大、右键平移。</p>
+        <p class="hint">先以 1× 连播观察，再用 0.25× 或帧号定位。反馈时告诉我角色、动作、帧段和异常部位。</p>
+        <p class="hint">完整烘焙已暂停。这些是已有动画；网页中的光影与 CK3 实机不同。</p>
+      </div>
+      <div class="debug-only">
+      <div class="section-title">选中部件</div><h2 id="selection">尚未选择</h2><p id="selection-info" class="hint">点击模型上的裙子、袖子或飘带。</p>
+      <fieldset id="part-controls" disabled>
+        <label>物理方式<select id="mode"><option value="current">保持当前规则</option><option value="follow">跟随依附骨（无独立物理）</option><option value="no_collision">保留物理，关闭碰撞</option><option value="physics">使用原始物理模式</option></select></label>
+        <div id="sliders"></div>
+        <div class="section-title">额外排除碰撞组</div><div id="collision-groups"></div>
+        <p class="hint">勾选后排除整个碰撞组。原有免碰规则继续生效。</p>
+        <button id="reset-part" class="full">恢复此部件的当前规则</button>
+      </fieldset>
+      <details><summary>解算参数</summary><fieldset id="solver-controls"></fieldset></details>
+      <button id="bake" class="primary full">试烘当前动作</button><button id="cancel" class="full" hidden>取消试烘</button>
+      <p class="hint">试烘完成后右侧自动展示结果。方案与结果保存到本地调试目录，确认后再走完整装机。</p>
+      <details id="job-details"><summary id="job-title">试烘记录</summary><pre id="log">暂无任务</pre></details>
+      </div>
+    </aside>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
